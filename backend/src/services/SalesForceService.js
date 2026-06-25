@@ -53,7 +53,7 @@ export async function fetchValidationRules(accessToken, instanceUrl) {
   return response.data.records || [];
 }
 
-// ── Helpers ────────────────────────────────────────────────────────────
+// Helpers 
 
 function getConn(accessToken, instanceUrl) {
   return new jsforce.Connection({ instanceUrl, accessToken, version: API_VERSION });
@@ -71,13 +71,7 @@ async function retry(fn, attempts = 3, delayMs = 1200) {
   throw lastErr;
 }
 
-/**
- * THE CORE FIX:
- * Always read the FULL CustomObject metadata first, then surgically
- * patch only the validationRules array and write the whole object back.
- * This prevents Salesforce from interpreting absent fields as deletions,
- * which is what was partially corrupting Connected App settings.
- */
+
 async function readFullObjectMeta(conn, objectApiName) {
   const meta = await conn.metadata.read('CustomObject', objectApiName);
 
@@ -88,11 +82,7 @@ async function readFullObjectMeta(conn, objectApiName) {
   return Array.isArray(meta) ? meta[0] : meta;
 }
 
-/**
- * Build the safe update payload:
- * Carry every top-level key from the original metadata EXCEPT validationRules
- * (which we replace), so nothing else gets wiped.
- */
+
 function buildSafePayload(fullMeta, newRules) {
   // Fields that Salesforce rejects if sent back during update
   const STRIP_FIELDS = [
@@ -138,7 +128,7 @@ function normaliseRule(r, objectApiName) {
   return clean;
 }
 
-// ── TOGGLE active / inactive ───────────────────────────────────────────
+// TOGGLE active / inactive 
 export async function toggleValidationRule(
   accessToken, instanceUrl, objectApiName, validationRuleName, active
 ) {
@@ -161,7 +151,7 @@ export async function toggleValidationRule(
   });
 }
 
-// ── CREATE a new rule ──────────────────────────────────────────────────
+// CREATE a new rule 
 export async function createValidationRule(
   accessToken, instanceUrl, objectApiName, rule
 ) {
@@ -190,7 +180,7 @@ export async function createValidationRule(
   });
 }
 
-// ── UPDATE (full edit) a rule ──────────────────────────────────────────
+// UPDATE (full edit) a rule 
 export async function updateValidationRule(
   accessToken, instanceUrl, objectApiName, validationRuleName, rule
 ) {
@@ -225,7 +215,7 @@ export async function updateValidationRule(
   });
 }
 
-// ── DELETE a rule ──────────────────────────────────────────────────────
+// DELETE a rule 
 export async function deleteValidationRule(
   accessToken, instanceUrl, objectApiName, validationRuleName
 ) {

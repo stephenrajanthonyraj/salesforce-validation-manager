@@ -7,13 +7,13 @@ import {
   getUserInfo
 } from '../services/SalesforceService.js';
 
-// ── GET all rules ──────────────────────────────────────────────────────
-// RulesController.js — fix ALL handlers like this
+// GET all rules 
+
 
 export async function getRules(req, res) {
   try {
     const { access_token } = req.query;
-    const instance_url = decodeURIComponent(req.query.instance_url); // ✅ decode here
+    const instance_url = decodeURIComponent(req.query.instance_url); 
 
     if (!access_token || !instance_url)
       return res.status(400).json({ error: 'Missing access_token or instance_url' });
@@ -29,7 +29,7 @@ export async function getRules(req, res) {
   }
 }
 
-// ── GET user info ──────────────────────────────────────────────────────
+// GET user info
 export async function userInfo(req, res) {
   try {
     const { access_token } = req.query;
@@ -49,7 +49,7 @@ export async function userInfo(req, res) {
   }
 }
 
-// ── TOGGLE active/inactive ─────────────────────────────────────────────
+// TOGGLE active/inactive 
 export async function toggleRule(req, res) {
   try {
     const { access_token, instance_url, object_api_name, validation_rule_name, is_active } = req.body;
@@ -68,7 +68,7 @@ export async function toggleRule(req, res) {
   }
 }
 
-// ── CREATE a new rule ──────────────────────────────────────────────────
+// CREATE a new rule
 export async function createRule(req, res) {
   try {
     const { access_token, instance_url, object_api_name, rule } = req.body;
@@ -90,7 +90,7 @@ export async function createRule(req, res) {
   }
 }
 
-// ── UPDATE (full edit) a rule ──────────────────────────────────────────
+// UPDATE (full edit) a rule 
 export async function updateRule(req, res) {
   try {
     const { access_token, instance_url, object_api_name, validation_rule_name, rule } = req.body;
@@ -109,7 +109,7 @@ export async function updateRule(req, res) {
   }
 }
 
-// ── DELETE a rule ──────────────────────────────────────────────────────
+// DELETE a rule 
 export async function deleteRule(req, res) {
   try {
     const { access_token, instance_url, object_api_name, validation_rule_name } = req.body;

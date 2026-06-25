@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { fas, faCloud, faArrowsRotate } from "@fortawesome/free-solid-svg-icons";
 import './App.css';
 
+library.add(fas);
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
 
 function Modal({ title, onClose, children }) {
@@ -91,7 +95,7 @@ function App() {
   const [deletingRule, setDeletingRule] = useState(null);
   const [saving, setSaving] = useState(false);
 
-  // ── Helpers ───────────────────────────────────────────────────────────
+  // Helpers
   const showMsg = (text, type = 'info') => {
     setMessage({ text, type });
     setTimeout(() => setMessage({ text: '', type: '' }), 4000);
@@ -101,7 +105,7 @@ function App() {
     window.location.href = `${BACKEND_URL}/auth/salesforce`;
   };
 
-  // ── Auth ──────────────────────────────────────────────────────────────
+  // Auth 
   useEffect(() => {
     // If tokens were provided in the URL, clear them from the address bar and
     // notify the user. State is initialized from the URL to avoid synchronous
@@ -133,7 +137,7 @@ function App() {
     fetchUserInfo();
   }, [accessToken, instanceUrl]);
 
-  // ── READ ──────────────────────────────────────────────────────────────
+  // READ 
   const getRules = async () => {
     if (!accessToken || !instanceUrl) {
       showMsg('Please login to Salesforce first.', 'error');
@@ -159,7 +163,7 @@ function App() {
     }
   };
 
-  // ── CREATE ────────────────────────────────────────────────────────────
+  // CREATE 
   const openCreate = () => {
     setFormData(EMPTY_FORM);
     setShowCreate(true);
@@ -191,7 +195,7 @@ function App() {
     }
   };
 
-  // ── UPDATE (Edit) ─────────────────────────────────────────────────────
+  //  UPDATE (Edit) 
   const openEdit = (rule) => {
     setEditingRule(rule);
     setFormData({
@@ -232,7 +236,7 @@ function App() {
     }
   };
 
-  // ── TOGGLE (Active/Inactive) ──────────────────────────────────────────
+  // TOGGLE (Active/Inactive) 
   const toggleRule = async (rule) => {
     try {
       const newState = !rule.Active;
@@ -256,7 +260,7 @@ function App() {
     }
   };
 
-  // ── DELETE ────────────────────────────────────────────────────────────
+  // DELETE 
   const openDelete = (rule) => {
     setDeletingRule(rule);
     setShowDelete(true);
@@ -284,7 +288,7 @@ function App() {
     }
   };
 
-  // ── Render ────────────────────────────────────────────────────────────
+  // Render 
   return (
     <div className="app">
       <header className="app-header">
@@ -306,7 +310,7 @@ function App() {
         {!accessToken ? (
           <div className="login-screen">
             <div className="login-card">
-              <div className="login-icon">☁️</div>
+              <div className="login-icon"><FontAwesomeIcon icon={faCloud} style={{color: "rgb(112, 176, 197)",}} /></div>
               <h1>Salesforce Validation Rule Manager</h1>
               <p>Connect your Salesforce org to manage validation rules in one place.</p>
               <button className="btn btn-primary btn-lg" onClick={loginToSalesforce}>
@@ -324,7 +328,11 @@ function App() {
               </div>
               <div className="org-actions">
                 <button className="btn btn-outline" onClick={getRules} disabled={loading}>
-                  {loading ? 'Loading…' : '⟳ Refresh Rules'}
+                  {loading ? 'Loading…' : (
+                    <>
+                      <FontAwesomeIcon icon={faArrowsRotate} style={{color: "rgb(164, 212, 226)"}} /> Refresh Rules
+                    </>
+                  )}
                 </button>
                 <button className="btn btn-primary" onClick={openCreate}>
                   + New Rule
