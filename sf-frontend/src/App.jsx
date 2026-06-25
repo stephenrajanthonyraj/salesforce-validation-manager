@@ -91,7 +91,7 @@ function App() {
   const [deletingRule, setDeletingRule] = useState(null);
   const [saving, setSaving] = useState(false);
 
-  // ── Helpers ───────────────────────────────────────────────────────────
+  // Helpers
   const showMsg = (text, type = 'info') => {
     setMessage({ text, type });
     setTimeout(() => setMessage({ text: '', type: '' }), 4000);
@@ -101,7 +101,7 @@ function App() {
     window.location.href = `${BACKEND_URL}/auth/salesforce`;
   };
 
-  // ── Auth ──────────────────────────────────────────────────────────────
+  // Auth 
   useEffect(() => {
     // If tokens were provided in the URL, clear them from the address bar and
     // notify the user. State is initialized from the URL to avoid synchronous
@@ -133,7 +133,7 @@ function App() {
     fetchUserInfo();
   }, [accessToken, instanceUrl]);
 
-  // ── READ ──────────────────────────────────────────────────────────────
+  // READ 
   const getRules = async () => {
     if (!accessToken || !instanceUrl) {
       showMsg('Please login to Salesforce first.', 'error');
@@ -159,7 +159,7 @@ function App() {
     }
   };
 
-  // ── CREATE ────────────────────────────────────────────────────────────
+  // CREATE 
   const openCreate = () => {
     setFormData(EMPTY_FORM);
     setShowCreate(true);
@@ -191,7 +191,7 @@ function App() {
     }
   };
 
-  // ── UPDATE (Edit) ─────────────────────────────────────────────────────
+  //  UPDATE (Edit) 
   const openEdit = (rule) => {
     setEditingRule(rule);
     setFormData({
@@ -232,7 +232,7 @@ function App() {
     }
   };
 
-  // ── TOGGLE (Active/Inactive) ──────────────────────────────────────────
+  // TOGGLE (Active/Inactive) 
   const toggleRule = async (rule) => {
     try {
       const newState = !rule.Active;
@@ -256,7 +256,7 @@ function App() {
     }
   };
 
-  // ── DELETE ────────────────────────────────────────────────────────────
+  // DELETE 
   const openDelete = (rule) => {
     setDeletingRule(rule);
     setShowDelete(true);
@@ -284,7 +284,7 @@ function App() {
     }
   };
 
-  // ── Render ────────────────────────────────────────────────────────────
+  // Render 
   return (
     <div className="app">
       <header className="app-header">
