@@ -128,11 +128,7 @@ function normaliseRule(r, objectApiName) {
   return clean;
 }
 
-<<<<<<< HEAD
-// TOGGLE active / inactive 
-=======
-// TOGGLE active / inactive ───────────────────────────────────────────
->>>>>>> 02688121239bc0cf032088b411acceba5542fefa
+// TOGGLE active / inactive
 export async function toggleValidationRule(
   accessToken, instanceUrl, objectApiName, validationRuleName, active
 ) {

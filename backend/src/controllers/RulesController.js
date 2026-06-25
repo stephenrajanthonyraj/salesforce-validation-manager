@@ -8,12 +8,6 @@ import {
 } from '../services/SalesforceService.js';
 
 // GET all rules 
-<<<<<<< HEAD
-
-=======
-// RulesController.js — fix ALL handlers like this
->>>>>>> 02688121239bc0cf032088b411acceba5542fefa
-
 export async function getRules(req, res) {
   try {
     const { access_token } = req.query;
